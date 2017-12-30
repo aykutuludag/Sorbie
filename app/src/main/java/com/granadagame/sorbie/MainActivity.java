@@ -1,49 +1,31 @@
 package com.granadagame.sorbie;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     FragmentTransaction transaction;
     Window window;
     Toolbar toolbar;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_feed:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_container, new FragmentFeed());
-                    transaction.commit();
-                    return true;
-                case R.id.navigation_search:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_container, new FragmentSearch());
-                    transaction.commit();
-                    return true;
-                case R.id.navigation_profile:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_container, new FragmentProfile());
-                    transaction.commit();
-                    return true;
-            }
-            return false;
-        }
-    };
+    BottomNavigationView navigation;
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
+    boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +35,64 @@ public class MainActivity extends AppCompatActivity {
         // Initializing Toolbar and setting it as the actionbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Sorbie");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(R.drawable.sorbie);
 
         //Window
         window = this.getWindow();
 
+        coloredBars(Color.parseColor("#616161"), Color.parseColor("#ffffff"));
 
-
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.bottom_navigation);
+        mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_feed:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, new FragmentFeed());
+                        transaction.commit();
+                        return true;
+                    case R.id.navigation_search:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, new FragmentSearch());
+                        transaction.commit();
+                        return true;
+                    case R.id.navigation_profile:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, new FragmentProfile());
+                        transaction.commit();
+                        return true;
+                    default:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, new FragmentFeed());
+                        transaction.commit();
+                        break;
+                }
+                return false;
+            }
+        };
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        if (savedInstanceState == null) {
+            Fragment fragment = new FragmentFeed();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+        }
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this,UploadActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -79,16 +105,10 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     void logOut() {
 
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm != null ? cm.getActiveNetworkInfo() : null) != null;
     }
 
     public void coloredBars(int color1, int color2) {
@@ -100,5 +120,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             toolbar.setBackgroundColor(color2);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.exit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

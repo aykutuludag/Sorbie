@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentProfile extends Fragment {
 
 
@@ -28,8 +24,8 @@ public class FragmentProfile extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Analytics
-        Tracker t = ((AnalyticsApplication) getActivity().getApplication()).getDefaultTracker();
-        t.setScreenName("Profile");
+        Tracker t = ((AnalyticsApplication) getActivity().getApplicationContext()).getDefaultTracker();
+        t.setScreenName("Profil");
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
 

@@ -1,11 +1,14 @@
 package com.granadagame.sorbie;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -48,11 +51,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Analytics
         Tracker t = ((AnalyticsApplication) this.getApplicationContext()).getDefaultTracker();
-        t.setScreenName("Login");
+        t.setScreenName("Giriş yap");
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
         prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
+        isSigned = prefs.getBoolean("isSigned", false);
 
         //ProgressBar
         pb = findViewById(R.id.progressBar);
@@ -85,6 +89,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                //BURADA KULLANICI BİLGİLERİ ÇEKİLECEK
+
+
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -105,10 +112,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             signInButton.setVisibility(View.GONE);
             loginButton.setVisibility(View.GONE);
             pb.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
 
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(i);
-            finish();
+                }
+            }, 3000);
         } else {
             signInButton.setVisibility(View.VISIBLE);
             loginButton.setVisibility(View.VISIBLE);
@@ -136,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (acct.getPhotoUrl() != null) {
                         prefs.edit().putString("ProfilePhoto", acct.getPhotoUrl().toString()).apply();
                     } else {
-                        prefs.edit().putString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.defaultpp").apply();
+                        prefs.edit().putString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.profile").apply();
                     }
                     // G+
                     Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);

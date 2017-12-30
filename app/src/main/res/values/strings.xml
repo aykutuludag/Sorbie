@@ -3,9 +3,9 @@
     <string name="fb_login_protocol_scheme">fb899492156878993</string>
     <string name="app_name">Sorbie</string>
 
-    <string name="title_home">Akış</string>
-    <string name="title_dashboard">Arama</string>
-    <string name="title_notifications">Profil</string>
+    <string name="title_feed">Akış</string>
+    <string name="title_search">Arama</string>
+    <string name="title_profile">Profil</string>
 
     <string name="title_activity_login">Giriş yap</string>
     <string name="account_created">Hesabınız oluşturuldu. Şimdi Sorbie zamanı...</string>
@@ -13,4 +13,8 @@
     <string name="error_login_fail">Giriş yaparken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="error_login_cancel">Giriş işlemi kullanıcı tarafından iptal edildi</string>
     <string name="logout">Log out</string>
+    <string name="exit">Uygulamadan çıkmak için tekrar dokunun.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

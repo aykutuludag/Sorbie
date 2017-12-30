@@ -11,9 +11,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentSearch extends Fragment {
 
 
@@ -28,7 +25,7 @@ public class FragmentSearch extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search,container,false);
 
         // Analytics
-        Tracker t = ((AnalyticsApplication) getActivity().getApplication()).getDefaultTracker();
+        Tracker t = ((AnalyticsApplication) getActivity().getApplicationContext()).getDefaultTracker();
         t.setScreenName("Arama");
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
