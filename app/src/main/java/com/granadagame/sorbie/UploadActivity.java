@@ -39,7 +39,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -175,7 +174,7 @@ public class UploadActivity extends AppCompatActivity {
                         loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(UploadActivity.this, s, Toast.LENGTH_LONG).show();
-
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {

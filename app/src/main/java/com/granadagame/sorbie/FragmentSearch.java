@@ -69,8 +69,6 @@ public class FragmentSearch extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                searchParameter = s;
-                searchImage();
                 return false;
             }
         });
