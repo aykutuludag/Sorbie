@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="MainTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MainTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -16,9 +16,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="MainTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MainTheme.AppBarOverlay" parent="Theme.AppCompat.Light" />
 
-    <style name="MainTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="MainTheme.PopupOverlay" parent="Theme.AppCompat.Light">
         <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 

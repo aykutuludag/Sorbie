@@ -1,6 +1,8 @@
 package com.granadagame.sorbie;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigation;
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     boolean doubleBackToExitPressedOnce;
+    SharedPreferences prefs;
+    public static String name, email, photo, gender, birthday, location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setIcon(R.drawable.sorbie);
+
+        prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
+        name = prefs.getString("Name", "");
+        email = prefs.getString("Email", "");
+        photo = prefs.getString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.profile");
+        gender = prefs.getString("Gender", "Male");
+        birthday = prefs.getString("Birthday", "");
+        location = prefs.getString("Location", "");
 
         //Window
         window = this.getWindow();
@@ -64,11 +76,6 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.frame_container, new FragmentProfile());
                         transaction.commit();
                         return true;
-                    default:
-                        transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_container, new FragmentFeed());
-                        transaction.commit();
-                        break;
                 }
                 return false;
             }
@@ -84,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,UploadActivity.class);
+                Intent i = new Intent(MainActivity.this, UploadActivity.class);
                 startActivity(i);
             }
         });
