@@ -22,9 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.granadagame.sorbie.adapter.FeedAdapter;
-import com.granadagame.sorbie.adapter.PostAdapter;
 import com.granadagame.sorbie.model.FeedItem;
-import com.granadagame.sorbie.model.PostItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +43,7 @@ public class FragmentSearch extends Fragment {
     RecyclerView mRecyclerView;
     GridLayoutManager mLayoutManager;
     RecyclerView.Adapter mAdapter;
-    List<PostItem> feedsList;
+    List<FeedItem> feedsList;
     String searchParameter;
 
     @Override
@@ -65,12 +63,14 @@ public class FragmentSearch extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 searchParameter = s;
+                searchImage();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 searchParameter = s;
+                searchImage();
                 return false;
             }
         });
@@ -94,13 +94,6 @@ public class FragmentSearch extends Fragment {
 
         searchImage();
 
-        mAdapter = new PostAdapter(getActivity(), feedsList);
-        mLayoutManager = new GridLayoutManager(getActivity(), 1);
-
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
         return v;
     }
 
@@ -115,12 +108,20 @@ public class FragmentSearch extends Fragment {
                             for (int i = 0; i < res.length(); i++) {
                                 JSONObject obj = res.getJSONObject(i);
 
-                                PostItem item = new PostItem();
+                                FeedItem item = new FeedItem();
                                 item.setID(Integer.parseInt(obj.getString("id")));
+                                item.setImageURI(obj.getString("photo").replace("\\/", "/"));
                                 item.setQuestion(obj.getString("question"));
                                 feedsList.add(item);
 
                                 System.out.println(feedsList);
+
+                                mAdapter = new FeedAdapter(getActivity(), feedsList);
+                                mLayoutManager = new GridLayoutManager(getActivity(), 1);
+
+                                mAdapter.notifyDataSetChanged();
+                                mRecyclerView.setAdapter(mAdapter);
+                                mRecyclerView.setLayoutManager(mLayoutManager);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

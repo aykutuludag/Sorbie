@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.sorbie);
 
         prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
-        name = prefs.getString("Name", "");
-        email = prefs.getString("Email", "");
+        name = prefs.getString("Name", "-");
+        email = prefs.getString("Email", "-");
         photo = prefs.getString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.profile");
         gender = prefs.getString("Gender", "Male");
-        birthday = prefs.getString("Birthday", "");
-        location = prefs.getString("Location", "");
+        birthday = prefs.getString("Birthday", "-");
+        location = prefs.getString("Location", "-");
 
         //Window
         window = this.getWindow();

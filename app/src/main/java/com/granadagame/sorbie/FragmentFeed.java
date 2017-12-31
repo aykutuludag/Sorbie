@@ -74,14 +74,6 @@ public class FragmentFeed extends Fragment {
         mRecyclerView = v.findViewById(R.id.feedView);
 
         fetchImage();
-
-        mAdapter = new FeedAdapter(getActivity(), feedsList);
-        mLayoutManager = new GridLayoutManager(getActivity(), 1);
-
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
         return v;
     }
 
@@ -103,6 +95,14 @@ public class FragmentFeed extends Fragment {
                                 feedsList.add(item);
 
                                 System.out.println(feedsList);
+
+                                mAdapter = new FeedAdapter(getActivity(), feedsList);
+                                mLayoutManager = new GridLayoutManager(getActivity(), 1);
+
+                                mAdapter.notifyDataSetChanged();
+                                mRecyclerView.setAdapter(mAdapter);
+                                mRecyclerView.setLayoutManager(mLayoutManager);
+                                swipeContainer.setRefreshing(false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -120,6 +120,5 @@ public class FragmentFeed extends Fragment {
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
-        swipeContainer.setRefreshing(false);
     }
 }
