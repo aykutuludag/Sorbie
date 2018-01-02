@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String name, email, photo, gender, birthday, location, username;
     FragmentTransaction transaction;
     Window window;
     Toolbar toolbar;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     boolean doubleBackToExitPressedOnce;
     SharedPreferences prefs;
-    public static String name, email, photo, gender, birthday, location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
         prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
         name = prefs.getString("Name", "-");
         email = prefs.getString("Email", "-");
-        photo = prefs.getString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.profile");
+        photo = prefs.getString("ProfilePhoto", "http://granadagame.com/Sorbie/profile.png");
         gender = prefs.getString("Gender", "Male");
         birthday = prefs.getString("Birthday", "-");
         location = prefs.getString("Location", "-");
+        username = prefs.getString("UserName", "-");
 
         //Window
         window = this.getWindow();

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,9 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -43,7 +40,6 @@ public class FragmentFeed extends Fragment {
     GridLayoutManager mLayoutManager;
     RecyclerView.Adapter mAdapter;
     List<FeedItem> feedsList;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -89,9 +85,13 @@ public class FragmentFeed extends Fragment {
                                 JSONObject obj = res.getJSONObject(i);
 
                                 FeedItem item = new FeedItem();
-                                item.setID(Integer.parseInt(obj.getString("id")));
+                                item.setID(obj.getInt("id"));
+                                item.setUsername(obj.getString("username"));
                                 item.setImageURI(obj.getString("photo").replace("\\/", "/"));
                                 item.setQuestion(obj.getString("question"));
+                                item.setTime(obj.getString("time"));
+                                item.setIsAnswered(obj.getInt("isAnswered"));
+                                item.setComment_number(obj.getInt("comment_number"));
                                 feedsList.add(item);
 
                                 System.out.println(feedsList);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.granadagame.sorbie.R;
 import com.granadagame.sorbie.model.FeedItem;
@@ -48,6 +49,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         int ID = feedItem.getID();
 
+        viewHolder.username.setText(feedItem.getUsername());
+
+        viewHolder.time.setText(feedItem.getTime());
+
         Picasso.with(mContext).load(feedItem.getImageURI()).error(R.drawable.empty).placeholder(R.drawable.empty)
                 .into(viewHolder.questionImage);
         viewHolder.question.setText(feedItem.getQuestion());
@@ -66,11 +71,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         Button question;
         ImageView questionImage;
+        TextView username;
+        TextView time;
 
         ViewHolder(View itemView) {
             super(itemView);
             questionImage = itemView.findViewById(R.id.imageView2);
             question = itemView.findViewById(R.id.button2);
+            username = itemView.findViewById(R.id.textView);
+            time = itemView.findViewById(R.id.textView2);
         }
     }
 }

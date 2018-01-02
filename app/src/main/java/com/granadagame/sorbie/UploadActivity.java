@@ -47,6 +47,8 @@ import java.util.Map;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 
+import static com.granadagame.sorbie.MainActivity.username;
+
 public class UploadActivity extends AppCompatActivity {
 
     static final int REQUEST_EXTERNAL_STORAGE = 0;
@@ -189,6 +191,7 @@ public class UploadActivity extends AppCompatActivity {
                 //Adding parameters
                 params.put("photo", getStringImage(bitmap));
                 params.put("question", question);
+                params.put("username", username);
 
                 //returning parameters
                 return params;

@@ -1,5 +1,6 @@
 package com.granadagame.sorbie;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -28,6 +36,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import java.text.Normalizer;
+import java.util.Hashtable;
+import java.util.Map;
+
+import static com.granadagame.sorbie.MainActivity.birthday;
+import static com.granadagame.sorbie.MainActivity.email;
+import static com.granadagame.sorbie.MainActivity.gender;
+import static com.granadagame.sorbie.MainActivity.location;
+import static com.granadagame.sorbie.MainActivity.name;
+import static com.granadagame.sorbie.MainActivity.photo;
+import static com.granadagame.sorbie.MainActivity.username;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -40,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     LoginButton loginButton;
     int googleSign = 9001;
     ProgressBar pb;
+    String REGISTER_URL = "http://granadagame.com/Sorbie/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +68,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // Analytics
-        Tracker t = ((AnalyticsApplication) this.getApplicationContext()).getDefaultTracker();
-        t.setScreenName("Giriş yap");
+        t = ((AnalyticsApplication) this.getApplicationContext()).getDefaultTracker();
+        t.setScreenName("Giriş yap/Splash");
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -86,9 +107,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                //BURADA KULLANICI BİLGİLERİ ÇEKİLECEK
-
-
+                //FACEBOOK kullanıcı bilgileri burada çekilecek
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -117,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     finish();
 
                 }
-            }, 3000);
+            }, 2000);
         } else {
             signInButton.setVisibility(View.VISIBLE);
             loginButton.setVisibility(View.VISIBLE);
@@ -130,6 +149,62 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startActivityForResult(signInIntent, googleSign);
     }
 
+    private void saveUserInfo() {
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(LoginActivity.this, "Uploading...", "Please wait...", false, false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        loading.dismiss();
+                        Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+                        prefs.edit().putBoolean("isSigned", true).apply();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }, 2000);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+                        Toast.makeText(LoginActivity.this, volleyError.toString(), Toast.LENGTH_LONG).show();
+                        prefs.edit().putBoolean("isSigned", false).apply();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Creating parameters
+                Map<String, String> params = new Hashtable<>();
+
+                //Adding parameters
+                params.put("username", username);
+                params.put("name", name);
+                params.put("email", email);
+                params.put("photo", photo);
+                params.put("gender", gender);
+                params.put("birthday", birthday);
+                params.put("location", location);
+                params.put("accType", "Android");
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,53 +213,84 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 if (acct != null) {
-                    System.out.println(acct.getGrantedScopes());
-                    prefs.edit().putString("GoogleAccountID", acct.getId()).apply();
-                    prefs.edit().putString("Name", acct.getDisplayName()).apply();
-                    prefs.edit().putString("Email", acct.getEmail()).apply();
-                    if (acct.getPhotoUrl() != null) {
-                        prefs.edit().putString("ProfilePhoto", acct.getPhotoUrl().toString()).apply();
+
+                    //GOOGLE ID
+                    String googleID = acct.getId();
+                    prefs.edit().putString("GoogleAccountID", googleID).apply();
+
+                    //NAME
+                    name = acct.getDisplayName();
+                    prefs.edit().putString("Name", name).apply();
+
+                    //USERNAME
+                    String tmpusername = Normalizer.normalize(name, Normalizer.Form.NFD).replaceAll("[^a-zA-Z]", "").replace(" ", "").toLowerCase();
+                    if (tmpusername.length() > 16) {
+                        username = tmpusername.substring(0, 15);
                     } else {
-                        prefs.edit().putString("ProfilePhoto", "android.resource://com.granadagame.sorbie/R.drawable.profile").apply();
+                        username = tmpusername;
                     }
+                    prefs.edit().putString("UserName", username).apply();
+
+                    //EMAİL
+                    email = acct.getEmail();
+                    prefs.edit().putString("Email", email).apply();
+
+                    //PHOTO
+                    if (acct.getPhotoUrl() != null) {
+                        photo = acct.getPhotoUrl().toString();
+                        prefs.edit().putString("ProfilePhoto", photo).apply();
+                    } else {
+                        photo = "http://granadagame.com/Sorbie/profile.png";
+                        prefs.edit().putString("ProfilePhoto", photo).apply();
+                    }
+
                     // G+
                     Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
                     if (person != null) {
+                        //GENDER
                         if (person.getGender() == 0) {
-                            prefs.edit().putString("Gender", "Male").apply();
+                            gender = "Male";
+                            prefs.edit().putString("Gender", gender).apply();
                         } else if (person.getGender() == 1) {
-                            prefs.edit().putString("Gender", "Female").apply();
+                            gender = "Female";
+                            prefs.edit().putString("Gender", gender).apply();
                         } else {
-                            prefs.edit().putString("Gender", "Other").apply();
+                            gender = "Other";
+                            prefs.edit().putString("Gender", gender).apply();
                         }
+
+                        //BIRTHDAY
                         if (person.getBirthday() != null) {
-                            prefs.edit().putString("Birthday", person.getBirthday()).apply();
+                            birthday = person.getBirthday();
+                            prefs.edit().putString("Birthday", birthday).apply();
                         }
+
+                        //LOCATION
                         if (person.getCurrentLocation() != null) {
-                            prefs.edit().putString("Location", person.getCurrentLocation()).apply();
+                            location = person.getCurrentLocation();
+                            prefs.edit().putString("Location", location).apply();
                         }
                     } else {
-                        prefs.edit().putString("Gender", "Male").apply();
+                        //Default values
+                        gender = "Male";
+                        birthday = "01-01-2000";
+                        location = "World";
+                        prefs.edit().putString("Gender", gender).apply();
                         prefs.edit().putString("Birthday", null).apply();
                         prefs.edit().putString("Location", null).apply();
                     }
 
-                    prefs.edit().putBoolean("isSigned", result.isSuccess()).apply();
-                    Toast.makeText(this, getString(R.string.account_created), Toast.LENGTH_SHORT).show();
                     signInButton.setVisibility(View.INVISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    }, 2000);
+                    prefs.edit().putBoolean("isSigned", true).apply();
+
+                    saveUserInfo();
                 } else {
                     Toast.makeText(this, getString(R.string.error_login_no_account), Toast.LENGTH_SHORT).show();
+                    prefs.edit().putBoolean("isSigned", false).apply();
                 }
             } else {
                 Toast.makeText(this, getString(R.string.error_login_fail), Toast.LENGTH_SHORT).show();
+                prefs.edit().putBoolean("isSigned", false).apply();
             }
         }
     }
