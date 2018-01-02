@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -33,11 +34,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -59,7 +62,6 @@ public class UploadActivity extends AppCompatActivity {
     Window window;
     android.support.v7.widget.Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,14 +77,6 @@ public class UploadActivity extends AppCompatActivity {
         //Window
         window = this.getWindow();
         coloredBars(Color.parseColor("#616161"), Color.parseColor("#ffffff"));
-
-        if (bitmap == null) {
-            try {
-                MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse("android.resource://com.granadagame.sorbie/R.drawable.profile"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         imageHolder = findViewById(R.id.photoHolder);
         imageHolder.setImageBitmap(bitmap);
@@ -219,12 +213,18 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
+    public void createFolder() {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/Sorbie");
+        folder.mkdirs();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_EXTERNAL_STORAGE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(UploadActivity.this, "Settings saved...", Toast.LENGTH_SHORT).show();
+                    createFolder();
                 } else {
                     Toast.makeText(UploadActivity.this, "Error 001: Permission request rejected by user...", Toast.LENGTH_LONG)
                             .show();
@@ -244,12 +244,32 @@ public class UploadActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     ArrayList<String> aq = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
                     choosenImagePath = aq.get(0);
+
+                    System.out.println("file://" + choosenImagePath);
+
+                    File folder = new File(Environment.getExternalStorageDirectory() + "/Sorbie");
+                    folder.mkdirs();
+
+                    CharSequence now = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", new Date());
+                    String fileName = now + ".jpg";
+
+                    UCrop.of(Uri.parse("file://" + choosenImagePath), Uri.fromFile(new File(folder, fileName)))
+                            .withAspectRatio(1, 1)
+                            .withMaxResultSize(1080, 1080)
+                            .start(UploadActivity.this);
+                }
+                break;
+            case UCrop.REQUEST_CROP:
+                if (resultCode == RESULT_OK) {
+                    final Uri resultUri = UCrop.getOutput(data);
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.fromFile(new File(choosenImagePath)));
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
                         imageHolder.setImageBitmap(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else if (resultCode == UCrop.RESULT_ERROR) {
+                    final Throwable cropError = UCrop.getError(data);
                 }
                 break;
         }

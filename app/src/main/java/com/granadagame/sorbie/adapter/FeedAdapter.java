@@ -48,7 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         int ID = feedItem.getID();
 
-        Picasso.with(mContext).load(feedItem.getImageURI()).error(R.drawable.profile).placeholder(R.drawable.profile)
+        Picasso.with(mContext).load(feedItem.getImageURI()).error(R.drawable.empty).placeholder(R.drawable.empty)
                 .into(viewHolder.questionImage);
         viewHolder.question.setText(feedItem.getQuestion());
 
