@@ -95,8 +95,6 @@ public class FragmentFeed extends Fragment {
                                 item.setProfile_pic(obj.getString("user_photo"));
                                 feedsList.add(item);
 
-                                System.out.println(feedsList);
-
                                 mAdapter = new FeedAdapter(getActivity(), feedsList);
                                 mLayoutManager = new GridLayoutManager(getActivity(), 1);
 

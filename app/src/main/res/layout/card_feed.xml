@@ -67,6 +67,28 @@
                 android:layout_marginTop="8dp"
                 card_view:srcCompat="@drawable/empty" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textView2"
+                android:layout_alignRight="@+id/textView2"
+                android:layout_below="@+id/imageView2"
+                android:elevation="5dp"
+                android:text="5 cevap"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#000" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageView"
+                android:layout_alignStart="@+id/imageView"
+                android:layout_below="@+id/imageView2"
+                android:elevation="5dp"
+                card_view:srcCompat="@drawable/waitinganswer" />
+
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
@@ -87,6 +109,13 @@
                 app:ael_expanded="false"
                 app:ael_interpolator="bounce"
                 app:ael_orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Answer it!" />
 
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 

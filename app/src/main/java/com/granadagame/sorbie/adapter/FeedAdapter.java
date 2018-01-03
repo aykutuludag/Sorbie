@@ -1,6 +1,7 @@
 package com.granadagame.sorbie.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.granadagame.sorbie.R;
 import com.granadagame.sorbie.model.FeedItem;
@@ -28,12 +30,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
             ViewHolder holder = (ViewHolder) view.getTag();
-           /* int position = holder.getAdapterPosition();
+            int position = holder.getAdapterPosition();
             int eventID = feedItemList.get(position).getID();
 
-            Intent intent = new Intent(mContext, SingleFeed.class);
-            intent.putExtra("EVENT_ID", eventID);
-            mContext.startActivity(intent);*/
+
+            holder.addAnswer.toggle();
         }
     };
 
@@ -60,7 +61,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Date date = new Date();
         try {
             date = format.parse(feedItem.getTime());
-            System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -74,6 +74,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         Picasso.with(mContext).load(feedItem.getProfile_pic()).error(R.drawable.empty).placeholder(R.drawable.empty)
                 .into(viewHolder.profilePic);
+
+        if (feedItem.getIsAnswered() == 1) {
+            viewHolder.verified.setImageResource(R.drawable.answered);
+            viewHolder.addAnswer.expand();
+            viewHolder.card.setBackgroundColor(Color.parseColor("#00801e"));
+        } else {
+            viewHolder.verified.setImageResource(R.drawable.waitinganswer);
+            viewHolder.addAnswer.collapse();
+            viewHolder.card.setBackgroundColor(Color.parseColor("#EFEFEF"));
+        }
+
+        viewHolder.comCount.setText(feedItem.getComment_number() + " yorum");
 
         // Handle click event on image click
         viewHolder.card.setOnClickListener(clickListener);
@@ -93,6 +105,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView username;
         RelativeTimeTextView time;
         ImageView profilePic;
+        ImageView verified;
+        TextView comCount;
+        ExpandableLayout addAnswer;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +117,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             username = itemView.findViewById(R.id.textView);
             time = itemView.findViewById(R.id.textView2);
             profilePic = itemView.findViewById(R.id.imageView);
+            verified = itemView.findViewById(R.id.imageView3);
+            comCount = itemView.findViewById(R.id.textView3);
+            addAnswer = itemView.findViewById(R.id.expandableLayout2);
         }
     }
 }
