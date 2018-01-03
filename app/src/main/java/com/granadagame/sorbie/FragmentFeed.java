@@ -92,6 +92,7 @@ public class FragmentFeed extends Fragment {
                                 item.setTime(obj.getString("time"));
                                 item.setIsAnswered(obj.getInt("isAnswered"));
                                 item.setComment_number(obj.getInt("comment_number"));
+                                item.setProfile_pic(obj.getString("user_photo"));
                                 feedsList.add(item);
 
                                 System.out.println(feedsList);

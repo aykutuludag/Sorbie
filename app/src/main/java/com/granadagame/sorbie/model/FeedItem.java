@@ -9,6 +9,7 @@ public class FeedItem {
     private String username;
     private int isAnswered;
     private int comment_number;
+    private String profile_pic;
 
     public int getID() {
         return ID;
@@ -64,5 +65,13 @@ public class FeedItem {
 
     public void setComment_number(int comment_number) {
         this.comment_number = comment_number;
+    }
+
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
     }
 }

@@ -1,7 +1,6 @@
 package com.granadagame.sorbie;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -108,14 +107,10 @@ public class FragmentProfile extends Fragment {
     }
 
     private void fetchUserQuestions() {
-        //Showing the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, FETCH_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        //Disimissing the progress dialog
-                        loading.dismiss();
                         feedsList.clear();
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://granadagame.com/Sorbie/fetch.php",
                                 new Response.Listener<String>() {
@@ -127,9 +122,14 @@ public class FragmentProfile extends Fragment {
                                                 JSONObject obj = res.getJSONObject(i);
 
                                                 FeedItem item = new FeedItem();
-                                                item.setID(Integer.parseInt(obj.getString("id")));
+                                                item.setID(obj.getInt("id"));
+                                                item.setUsername(obj.getString("username"));
                                                 item.setImageURI(obj.getString("photo").replace("\\/", "/"));
                                                 item.setQuestion(obj.getString("question"));
+                                                item.setTime(obj.getString("time"));
+                                                item.setIsAnswered(obj.getInt("isAnswered"));
+                                                item.setComment_number(obj.getInt("comment_number"));
+                                                item.setProfile_pic(obj.getString("user_photo"));
                                                 feedsList.add(item);
 
                                                 System.out.println(feedsList);
@@ -163,8 +163,6 @@ public class FragmentProfile extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        //Dismissing the progress dialog
-                        loading.dismiss();
                         //Showing toast
                         Toast.makeText(getActivity(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -188,5 +186,4 @@ public class FragmentProfile extends Fragment {
         //Adding request to the queue
         requestQueue.add(stringRequest);
     }
-
 }

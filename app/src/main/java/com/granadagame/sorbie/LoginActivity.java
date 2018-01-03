@@ -158,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onResponse(String s) {
                         loading.dismiss();
                         Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+                        signInButton.setVisibility(View.INVISIBLE);
                         prefs.edit().putBoolean("isSigned", true).apply();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -279,10 +280,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         prefs.edit().putString("Birthday", null).apply();
                         prefs.edit().putString("Location", null).apply();
                     }
-
-                    signInButton.setVisibility(View.INVISIBLE);
-                    prefs.edit().putBoolean("isSigned", true).apply();
-
                     saveUserInfo();
                 } else {
                     Toast.makeText(this, getString(R.string.error_login_no_account), Toast.LENGTH_SHORT).show();

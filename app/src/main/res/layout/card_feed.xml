@@ -43,7 +43,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#000" />
 
-            <TextView
+            <com.github.curioustechizen.ago.RelativeTimeTextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,16 +54,17 @@
                 android:layout_marginEnd="14dp"
                 android:layout_marginRight="8dp"
                 android:gravity="center"
-                android:text="2h ago"
-                android:textColor="#000" />
+                android:text="2 saat önce"
+                android:textColor="#000"
+                app:relative_time_prefix="Completed " />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView"
+                android:layout_centerVertical="true"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
                 card_view:srcCompat="@drawable/empty" />
 
             <Button

@@ -47,6 +47,7 @@ import java.util.Map;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 
+import static com.granadagame.sorbie.MainActivity.photo;
 import static com.granadagame.sorbie.MainActivity.username;
 
 public class UploadActivity extends AppCompatActivity {
@@ -78,7 +79,7 @@ public class UploadActivity extends AppCompatActivity {
 
         //Window
         window = this.getWindow();
-        coloredBars(Color.parseColor("#616161"), Color.parseColor("#ffffff"));
+        coloredBars(Color.parseColor("#626262"), Color.parseColor("#ffffff"));
 
         imageHolder = findViewById(R.id.photoHolder);
         imageHolder.setImageBitmap(bitmap);
@@ -192,6 +193,7 @@ public class UploadActivity extends AppCompatActivity {
                 params.put("photo", getStringImage(bitmap));
                 params.put("question", question);
                 params.put("username", username);
+                params.put("user_photo", photo);
 
                 //returning parameters
                 return params;

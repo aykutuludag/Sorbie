@@ -7,12 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.granadagame.sorbie.R;
 import com.granadagame.sorbie.model.FeedItem;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -22,11 +27,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            /*ViewHolder holder = (ViewHolder) view.getTag();
-            int position = holder.getAdapterPosition();
+            ViewHolder holder = (ViewHolder) view.getTag();
+           /* int position = holder.getAdapterPosition();
             int eventID = feedItemList.get(position).getID();
 
-            Intent intent = new Intent(mContext, SingleEvent.class);
+            Intent intent = new Intent(mContext, SingleFeed.class);
             intent.putExtra("EVENT_ID", eventID);
             mContext.startActivity(intent);*/
         }
@@ -51,15 +56,28 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         viewHolder.username.setText(feedItem.getUsername());
 
-        viewHolder.time.setText(feedItem.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        try {
+            date = format.parse(feedItem.getTime());
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        viewHolder.time.setReferenceTime(date.getTime());
 
         Picasso.with(mContext).load(feedItem.getImageURI()).error(R.drawable.empty).placeholder(R.drawable.empty)
                 .into(viewHolder.questionImage);
+
         viewHolder.question.setText(feedItem.getQuestion());
 
+        Picasso.with(mContext).load(feedItem.getProfile_pic()).error(R.drawable.empty).placeholder(R.drawable.empty)
+                .into(viewHolder.profilePic);
+
         // Handle click event on image click
-        viewHolder.question.setOnClickListener(clickListener);
-        viewHolder.question.setTag(viewHolder);
+        viewHolder.card.setOnClickListener(clickListener);
+        viewHolder.card.setTag(viewHolder);
     }
 
     @Override
@@ -69,17 +87,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout card;
         Button question;
         ImageView questionImage;
         TextView username;
-        TextView time;
+        RelativeTimeTextView time;
+        ImageView profilePic;
 
         ViewHolder(View itemView) {
             super(itemView);
+            card = itemView.findViewById(R.id.single_feed);
             questionImage = itemView.findViewById(R.id.imageView2);
             question = itemView.findViewById(R.id.button2);
             username = itemView.findViewById(R.id.textView);
             time = itemView.findViewById(R.id.textView2);
+            profilePic = itemView.findViewById(R.id.imageView);
         }
     }
 }

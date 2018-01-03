@@ -43,19 +43,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setIcon(R.drawable.sorbie);
 
+        //Window
+        window = this.getWindow();
+
+        coloredBars(Color.parseColor("#626262"), Color.parseColor("#ffffff"));
+
         prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
         name = prefs.getString("Name", "-");
         email = prefs.getString("Email", "-");
         photo = prefs.getString("ProfilePhoto", "http://granadagame.com/Sorbie/profile.png");
         gender = prefs.getString("Gender", "Male");
-        birthday = prefs.getString("Birthday", "-");
-        location = prefs.getString("Location", "-");
+        birthday = prefs.getString("Birthday", "01-01-2000");
+        location = prefs.getString("Location", "World");
         username = prefs.getString("UserName", "-");
-
-        //Window
-        window = this.getWindow();
-
-        coloredBars(Color.parseColor("#616161"), Color.parseColor("#ffffff"));
 
         navigation = findViewById(R.id.bottom_navigation);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
