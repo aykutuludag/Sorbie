@@ -210,6 +210,7 @@ public class CommentsActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
+                        Toast.makeText(CommentsActivity.this, s, Toast.LENGTH_LONG).show();
                         fetchComments();
                     }
                 },
@@ -225,8 +226,6 @@ public class CommentsActivity extends AppCompatActivity {
 
                 //Adding parameters
                 params.put("id", String.valueOf(questionID));
-                System.out.println("soru numarası:" + questionID);
-                System.out.println("yorum sayısı:" + commentCount);
                 params.put("comment_number", String.valueOf(commentCount++));
 
                 //returning parameters
