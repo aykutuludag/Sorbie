@@ -34,9 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentSearch extends Fragment {
 
     SwipeRefreshLayout swipeContainer;

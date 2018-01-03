@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -87,15 +85,6 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = new FragmentFeed();
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
         }
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, UploadActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -107,16 +96,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.navigation_logout:
-                logOut();
+            case R.id.navigation_addQuestion:
+                Intent i = new Intent(MainActivity.this, UploadActivity.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    void logOut() {
-
     }
 
     public void coloredBars(int color1, int color2) {

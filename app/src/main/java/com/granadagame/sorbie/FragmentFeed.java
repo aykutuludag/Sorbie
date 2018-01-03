@@ -29,10 +29,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentFeed extends Fragment {
 
     SwipeRefreshLayout swipeContainer;

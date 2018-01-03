@@ -54,7 +54,7 @@ public class UploadActivity extends AppCompatActivity {
 
     static final int REQUEST_EXTERNAL_STORAGE = 0;
     static String[] PERMISSIONS_STORAGE = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-    String UPLOAD_URL = "http://granadagame.com/Sorbie/upload.php";
+    String UPLOAD_URL = "http://granadagame.com/Sorbie/add_question.php";
     String choosenImagePath;
     String question;
 

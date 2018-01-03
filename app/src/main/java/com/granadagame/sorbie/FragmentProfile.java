@@ -43,7 +43,7 @@ import static com.granadagame.sorbie.MainActivity.username;
 
 public class FragmentProfile extends Fragment {
 
-    String FETCH_URL = "http://granadagame.com/Sorbie/user-fetch.php";
+    String FETCH_URL = "http://granadagame.com/Sorbie/fetch_user_questions.php";
 
     SwipeRefreshLayout swipeContainer;
     RecyclerView mRecyclerView;
@@ -107,55 +107,38 @@ public class FragmentProfile extends Fragment {
     }
 
     private void fetchUserQuestions() {
+        feedsList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, FETCH_URL,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String s) {
-                        feedsList.clear();
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://granadagame.com/Sorbie/fetch.php",
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONArray res = new JSONArray(response);
-                                            for (int i = 0; i < res.length(); i++) {
-                                                JSONObject obj = res.getJSONObject(i);
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray res = new JSONArray(response);
+                            for (int i = 0; i < res.length(); i++) {
+                                JSONObject obj = res.getJSONObject(i);
 
-                                                FeedItem item = new FeedItem();
-                                                item.setID(obj.getInt("id"));
-                                                item.setUsername(obj.getString("username"));
-                                                item.setImageURI(obj.getString("photo").replace("\\/", "/"));
-                                                item.setQuestion(obj.getString("question"));
-                                                item.setTime(obj.getString("time"));
-                                                item.setIsAnswered(obj.getInt("isAnswered"));
-                                                item.setComment_number(obj.getInt("comment_number"));
-                                                item.setProfile_pic(obj.getString("user_photo"));
-                                                feedsList.add(item);
+                                FeedItem item = new FeedItem();
+                                item.setID(obj.getInt("id"));
+                                item.setUsername(obj.getString("username"));
+                                item.setImageURI(obj.getString("photo").replace("\\/", "/"));
+                                item.setQuestion(obj.getString("question"));
+                                item.setTime(obj.getString("time"));
+                                item.setIsAnswered(obj.getInt("isAnswered"));
+                                item.setComment_number(obj.getInt("comment_number"));
+                                item.setProfile_pic(obj.getString("user_photo"));
+                                feedsList.add(item);
 
-                                                mAdapter = new FeedAdapter(getActivity(), feedsList);
-                                                mLayoutManager = new GridLayoutManager(getActivity(), 1);
+                                mAdapter = new FeedAdapter(getActivity(), feedsList);
+                                mLayoutManager = new GridLayoutManager(getActivity(), 1);
 
-                                                mAdapter.notifyDataSetChanged();
-                                                mRecyclerView.setAdapter(mAdapter);
-                                                mRecyclerView.setLayoutManager(mLayoutManager);
-                                                swipeContainer.setRefreshing(false);
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-                                }) {
-                        };
-                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                        //Adding request to the queue
-                        requestQueue.add(stringRequest);
+                                mAdapter.notifyDataSetChanged();
+                                mRecyclerView.setAdapter(mAdapter);
+                                mRecyclerView.setLayoutManager(mLayoutManager);
+                                swipeContainer.setRefreshing(false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
