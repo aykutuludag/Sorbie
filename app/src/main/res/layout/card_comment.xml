@@ -73,6 +73,44 @@
                 android:textColor="#000"
                 app:text="adfsdiiskşfdksdfklsdfklsdlflsdifgdfgdflgdflglşfdşligdflflsdlfksdflsdfsdadfsdiiskşfdksdfklsdfklsdlflsdifgdfgdflgdflglşfdşligdflflsdlfksdflsdfsd" />
 
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView4"
+                card_view:srcCompat="@drawable/button" />
+
+            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                android:id="@+id/expandableLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView5"
+                app:ael_duration="400"
+                app:ael_expanded="true"
+                app:ael_interpolator="bounce"
+                app:ael_orientation="vertical">
+
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00801e"
+                    android:text="Cevabı doğru olarak işaretle"
+                    android:textColor="#fff" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/button2"
+                    android:layout_toRightOf="@+id/button2"
+                    android:text="Cevabı sil" />
+            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

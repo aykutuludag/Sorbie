@@ -53,7 +53,7 @@ public class FragmentFeed extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchImage();
+                fetchQuestions();
             }
         });
         // Configure the refreshing colors
@@ -64,12 +64,10 @@ public class FragmentFeed extends Fragment {
 
         feedsList = new ArrayList<>();
         mRecyclerView = v.findViewById(R.id.feedView);
-
-        fetchImage();
         return v;
     }
 
-    public void fetchImage() {
+    public void fetchQuestions() {
         feedsList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://granadagame.com/Sorbie/fetch.php",
                 new Response.Listener<String>() {
@@ -115,5 +113,11 @@ public class FragmentFeed extends Fragment {
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchQuestions();
     }
 }

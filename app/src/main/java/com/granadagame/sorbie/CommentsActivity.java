@@ -1,5 +1,6 @@
 package com.granadagame.sorbie;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -167,10 +168,12 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     private void sendComment() {
+        final ProgressDialog loading = ProgressDialog.show(CommentsActivity.this, "Uploading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, SEND_COMMENT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        loading.dismiss();
                         Toast.makeText(CommentsActivity.this, response, Toast.LENGTH_SHORT).show();
                         updateCommentCount();
                     }
@@ -179,6 +182,7 @@ public class CommentsActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         //Showing toast
+                        loading.dismiss();
                         Toast.makeText(CommentsActivity.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }) {
