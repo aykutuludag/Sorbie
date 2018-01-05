@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
         name = prefs.getString("Name", "-");
         email = prefs.getString("Email", "-");
         photo = prefs.getString("ProfilePhoto", "http://granadagame.com/Sorbie/profile.png");
-        gender = prefs.getString("Gender", "Male");
-        birthday = prefs.getString("Birthday", "01-01-2000");
-        location = prefs.getString("Location", "World");
+        gender = prefs.getString("Gender", "-");
+        birthday = prefs.getString("Birthday", "-");
+        location = prefs.getString("Location", "-");
         username = prefs.getString("UserName", "-");
 
         navigation = findViewById(R.id.bottom_navigation);
