@@ -218,7 +218,7 @@ public class CommentsActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-
+                
                     }
                 },
                 new Response.ErrorListener() {
@@ -232,6 +232,9 @@ public class CommentsActivity extends AppCompatActivity {
                 Map<String, String> params = new Hashtable<>();
 
                 commentCount++;
+
+                System.out.println("Soru idsi:" + questionID);
+                System.out.println("Yorum sayısı:" + commentCount);
 
                 //Adding parameters
                 params.put("id", String.valueOf(questionID));
