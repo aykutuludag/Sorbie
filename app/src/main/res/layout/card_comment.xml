@@ -20,37 +20,39 @@
             android:layout_height="wrap_content"
             android:background="#EFEFEF">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                card_view:srcCompat="@drawable/profile" />
+                android:src="@drawable/profile"
+                app:civ_border_color="#EA6C34"
+                app:civ_border_width="1dp" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView"
-                android:layout_alignTop="@+id/imageView"
+                android:layout_alignBottom="@+id/profile_pic"
+                android:layout_alignTop="@+id/profile_pic"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/imageView"
-                android:layout_toRightOf="@+id/imageView"
+                android:layout_toEndOf="@+id/profile_pic"
+                android:layout_toRightOf="@+id/profile_pic"
                 android:gravity="center"
                 android:text="cioakbas"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#000" />
 
             <com.github.curioustechizen.ago.RelativeTimeTextView
-                android:id="@+id/textView2"
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textView"
+                android:layout_alignBottom="@+id/username"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/textView"
+                android:layout_alignTop="@+id/username"
                 android:layout_marginEnd="14dp"
                 android:layout_marginRight="8dp"
                 android:gravity="center"
@@ -59,57 +61,17 @@
                 app:relative_time_prefix="Completed " />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textView2"
-                android:layout_alignLeft="@+id/imageView"
-                android:layout_alignRight="@+id/textView2"
-                android:layout_alignStart="@+id/imageView"
-                android:layout_below="@+id/imageView"
-                android:layout_marginTop="8dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/profile_pic"
+                android:layout_margin="8dp"
                 android:text="cioakbas"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#000"
                 app:text="adfsdiiskşfdksdfklsdfklsdlflsdifgdfgdflgdflglşfdşligdflflsdlfksdflsdfsdadfsdiiskşfdksdfklsdfklsdlflsdifgdfgdflgdflglşfdşligdflflsdlfksdflsdfsd" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView4"
-                card_view:srcCompat="@drawable/button" />
-
-            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-                android:id="@+id/expandableLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView5"
-                app:ael_duration="400"
-                app:ael_expanded="true"
-                app:ael_interpolator="bounce"
-                app:ael_orientation="vertical">
-
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00801e"
-                    android:text="Cevabı doğru olarak işaretle"
-                    android:textColor="#fff" />
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/button2"
-                    android:layout_toRightOf="@+id/button2"
-                    android:text="Cevabı sil" />
-            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

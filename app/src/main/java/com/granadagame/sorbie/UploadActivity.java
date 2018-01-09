@@ -120,8 +120,7 @@ public class UploadActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (question.length() < 2) {
+                if (question == null) {
                     Toast.makeText(UploadActivity.this, "Soru çok kısa. Bir şeyler daha yazmak ister misin?", Toast.LENGTH_SHORT).show();
                 } else if (bitmap == null) {
                     Toast.makeText(UploadActivity.this, "Lütfen geçerli bir görsel seçiniz", Toast.LENGTH_SHORT).show();

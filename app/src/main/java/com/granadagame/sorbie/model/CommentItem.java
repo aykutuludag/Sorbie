@@ -7,6 +7,7 @@ public class CommentItem {
     private String time;
     private String username;
     private String profile_pic;
+    private int isTrue;
 
     public int getID() {
         return ID;
@@ -46,5 +47,13 @@ public class CommentItem {
 
     public void setProfile_pic(String profile_pic) {
         this.profile_pic = profile_pic;
+    }
+
+    public int getIsTrue() {
+        return isTrue;
+    }
+
+    public void setIsTrue(int isTrue) {
+        this.isTrue = isTrue;
     }
 }

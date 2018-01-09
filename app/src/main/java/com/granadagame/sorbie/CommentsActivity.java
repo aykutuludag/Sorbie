@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,6 +42,9 @@ import static com.granadagame.sorbie.MainActivity.username;
 
 public class CommentsActivity extends AppCompatActivity {
 
+    public static int questionID;
+    public static String questionOwner;
+    public static int commentCount;
     Toolbar toolbar;
     Window window;
     EditText commentHolder;
@@ -49,11 +53,7 @@ public class CommentsActivity extends AppCompatActivity {
     GridLayoutManager mLayoutManager;
     RecyclerView.Adapter mAdapter;
     List<CommentItem> feedsList;
-
     String comment;
-    int questionID;
-    int commentCount;
-
     private String FETCH_COMMENT = "http://granadagame.com/Sorbie/fetch_comments.php";
     private String SEND_COMMENT = "http://granadagame.com/Sorbie/add_comment.php";
     private String UPDATE_COMMENT_COUNT = "http://granadagame.com/Sorbie/comment_count.php";
@@ -77,6 +77,7 @@ public class CommentsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         questionID = intent.getIntExtra("question_ID", 0);
         commentCount = intent.getIntExtra("commentCount", 0);
+        questionOwner = intent.getStringExtra("questionOwner");
 
         feedsList = new ArrayList<>();
         mRecyclerView = findViewById(R.id.commentView);
@@ -129,6 +130,7 @@ public class CommentsActivity extends AppCompatActivity {
                                 item.setTime(obj.getString("time"));
                                 item.setProfile_pic(obj.getString("user_photo"));
                                 item.setUsername(obj.getString("username"));
+                                item.setIsTrue(obj.getInt("isTrue"));
                                 feedsList.add(item);
 
                                 mAdapter = new CommentAdapter(CommentsActivity.this, feedsList);
@@ -175,6 +177,8 @@ public class CommentsActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         loading.dismiss();
                         Toast.makeText(CommentsActivity.this, response, Toast.LENGTH_SHORT).show();
+                        commentHolder.setText("");
+                        fetchComments();
                         updateCommentCount();
                     }
                 },
@@ -214,8 +218,7 @@ public class CommentsActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        Toast.makeText(CommentsActivity.this, s, Toast.LENGTH_LONG).show();
-                        fetchComments();
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -228,9 +231,11 @@ public class CommentsActivity extends AppCompatActivity {
                 //Creating parameters
                 Map<String, String> params = new Hashtable<>();
 
+                commentCount++;
+
                 //Adding parameters
                 params.put("id", String.valueOf(questionID));
-                params.put("comment_number", String.valueOf(commentCount++));
+                params.put("comment_number", String.valueOf(commentCount));
 
                 //returning parameters
                 return params;
@@ -255,6 +260,16 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
 
     @Override
     public void onBackPressed() {
