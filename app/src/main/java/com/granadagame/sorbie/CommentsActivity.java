@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +54,7 @@ public class CommentsActivity extends AppCompatActivity {
     GridLayoutManager mLayoutManager;
     RecyclerView.Adapter mAdapter;
     List<CommentItem> feedsList;
+    SwipeRefreshLayout swipeContainer;
     String comment;
     private String FETCH_COMMENT = "http://granadagame.com/Sorbie/fetch_comments.php";
     private String SEND_COMMENT = "http://granadagame.com/Sorbie/add_comment.php";
@@ -110,7 +112,19 @@ public class CommentsActivity extends AppCompatActivity {
             }
         });
 
-        fetchComments();
+        swipeContainer = findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchComments();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     public void fetchComments() {
@@ -275,5 +289,11 @@ public class CommentsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchComments();
     }
 }

@@ -115,7 +115,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private void sharePost(String text, String uri) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, text + " " + uri);
+        intent.putExtra(Intent.EXTRA_TEXT, text + " " + uri + "Sorbie Google Play'de: https://play.google.com/store/apps/details?id=com.granadagame.sorbie");
         intent.setType("text/plain");
         mContext.startActivity(Intent.createChooser(intent, "Paylaş..."));
     }
@@ -187,7 +187,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 .into(viewHolder.profilePic);
 
         if (feedItem.getIsAnswered() == 1) {
-            viewHolder.verified.setImageResource(R.drawable.answered);
+            viewHolder.verified.setImageResource(R.drawable.send);
         } else {
             viewHolder.verified.setImageResource(R.drawable.waitinganswer);
         }

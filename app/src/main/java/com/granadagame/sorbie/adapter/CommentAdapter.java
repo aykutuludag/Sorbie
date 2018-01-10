@@ -108,6 +108,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        ((CommentsActivity) mContext).fetchComments();
                         Toast.makeText(mContext, response, Toast.LENGTH_LONG).show();
                     }
                 },
@@ -142,6 +143,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(mContext, response, Toast.LENGTH_LONG).show();
+                        ((CommentsActivity) mContext).fetchComments();
                         updateCommentCount();
                     }
                 },
@@ -174,7 +176,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        ((CommentsActivity) mContext).fetchComments();
+                        //Do nothing
                     }
                 },
                 new Response.ErrorListener() {
