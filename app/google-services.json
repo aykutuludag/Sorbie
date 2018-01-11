@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "561112514773-b780d1thg6299c0fi6li7midtka71963.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.granadagame.sorbie",
+            "certificate_hash": "8a4a6e6a3aa10c22101b3e6bdfa852ac4e63b0bc"
+          }
+        },
+        {
+          "client_id": "561112514773-8un16et4rjrut6qk1skka786jmiega9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.granadagame.sorbie",
+            "certificate_hash": "1037d99d5765433dcbc57f15f7f16dac2b1f2f96"
+          }
+        },
+        {
+          "client_id": "561112514773-541ga3uu40v26dj08u73hc46o5hf56eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.granadagame.sorbie",
+            "certificate_hash": "5dedf4838b9573fa5fc75c88c0f87ab1ad861b58"
+          }
+        },
+        {
+          "client_id": "561112514773-k52l7q2bjtco1vajic21hbi3g6g6ucus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.granadagame.sorbie",
+            "certificate_hash": "9bf6665d8184331447207a8e6c7a82a4c78d5100"
+          }
+        },
+        {
           "client_id": "561112514773-iahbrmnr7u8ratcn0ctll9as2uojihea.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +61,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561112514773-iahbrmnr7u8ratcn0ctll9as2uojihea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

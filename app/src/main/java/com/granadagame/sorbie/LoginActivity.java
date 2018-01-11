@@ -22,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.analytics.HitBuilders;
@@ -35,6 +37,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import org.json.JSONObject;
 
 import java.text.Normalizer;
 import java.util.Hashtable;
@@ -107,10 +111,33 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                //FACEBOOK kullanıcı bilgileri burada çekilecek
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+                                if (response.getError() != null) {
+                                    Toast.makeText(LoginActivity.this, getString(R.string.error_login_fail), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    name = me.optString("first_name");
+                                    name += " " + me.optString("last_name");
+                                    email = me.optString("email");
+                                    photo = me.optString("profile_pic");
+                                    gender = me.optString("gender");
+                                    location = me.optString("location");
+
+                                    //USERNAME
+                                    String tmpusername = Normalizer.normalize(name, Normalizer.Form.NFD).replaceAll("[^a-zA-Z]", "").replace(" ", "").toLowerCase();
+                                    if (tmpusername.length() > 16) {
+                                        username = tmpusername.substring(0, 15);
+                                    } else {
+                                        username = tmpusername;
+                                    }
+                                    prefs.edit().putString("UserName", username).apply();
+
+                                    saveUserInfo();
+                                }
+                            }
+                        }).executeAsync();
             }
 
             @Override
@@ -134,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
-
                 }
             }, 2000);
         } else {

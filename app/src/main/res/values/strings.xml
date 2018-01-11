@@ -8,7 +8,7 @@
     <string name="title_profile">Profil</string>
 
     <string name="title_activity_login">Giriş yap</string>
-    <string name="account_created">Hesabınız oluşturuldu. Şimdi Sorbie zamanı...</string>
+    <string name="account_created">Hesabınız oluşturuldu. Şimdi Sorbie zamanı&#8230;</string>
     <string name="error_login_no_account">Hesap bulunamadı.</string>
     <string name="error_login_fail">Giriş yaparken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="error_login_cancel">Giriş işlemi kullanıcı tarafından iptal edildi</string>
