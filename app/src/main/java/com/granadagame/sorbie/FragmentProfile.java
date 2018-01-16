@@ -1,6 +1,7 @@
 package com.granadagame.sorbie;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class FragmentProfile extends Fragment {
 
     String FETCH_URL = "http://granadagame.com/Sorbie/fetch_user_questions.php";
 
+    RelativeLayout headerView;
+
     SwipeRefreshLayout swipeContainer;
     RecyclerView mRecyclerView;
     GridLayoutManager mLayoutManager;
@@ -61,6 +65,16 @@ public class FragmentProfile extends Fragment {
         t.setScreenName("Profil");
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
+
+        //HeaderClick
+        headerView = v.findViewById(R.id.header_profile);
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), ProfileEditActivity.class);
+                startActivity(i);
+            }
+        });
 
         //Name
         TextView navUsername = v.findViewById(R.id.profile_name);

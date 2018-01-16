@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.granadagame.sorbie.ProfileActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/MainTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/MainTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/header_profile"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="#212121"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="#EA6C34"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/profile_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/profile_pic"
+            android:layout_alignLeft="@+id/profile_pic"
+            android:layout_alignRight="@+id/profile_pic"
+            android:layout_alignStart="@+id/profile_pic"
+            android:layout_below="@+id/profile_pic"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/profile_pic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_pic"
+            android:layout_toRightOf="@+id/profile_pic"
+            android:maxLength="16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
+
+        <ImageView
+            android:id="@+id/indicator_desc"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignLeft="@+id/profile_name"
+            android:layout_alignStart="@+id/profile_name"
+            android:layout_below="@+id/profile_name"
+            android:layout_marginTop="7dp"
+            app:srcCompat="@drawable/profile_email" />
+
+        <TextView
+            android:id="@+id/profile_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/indicator_desc"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@+id/indicator_desc"
+            android:layout_toRightOf="@+id/indicator_desc"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
+
+        <ImageView
+            android:id="@+id/indicator_loc"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignLeft="@+id/indicator_desc"
+            android:layout_alignStart="@+id/indicator_desc"
+            android:layout_below="@+id/indicator_desc"
+            android:layout_marginTop="7dp"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/profile_location" />
+
+        <TextView
+            android:id="@+id/profile_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/indicator_loc"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@+id/indicator_loc"
+            android:layout_toRightOf="@+id/indicator_loc"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
+
+        <ImageView
+            android:id="@+id/indicator_birthday"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignLeft="@+id/indicator_loc"
+            android:layout_alignStart="@+id/indicator_loc"
+            android:layout_below="@+id/indicator_loc"
+            android:layout_marginTop="7dp"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/profile_birthday" />
+
+        <TextView
+            android:id="@+id/profile_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/indicator_birthday"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@+id/indicator_birthday"
+            android:layout_toRightOf="@+id/indicator_birthday"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
+
+        <ImageView
+            android:id="@+id/indicator_gender"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignLeft="@+id/indicator_birthday"
+            android:layout_alignStart="@+id/indicator_birthday"
+            android:layout_below="@+id/profile_birthday"
+            android:layout_marginTop="7dp"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/profile_sex" />
+
+        <TextView
+            android:id="@+id/profile_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/indicator_gender"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@+id/indicator_gender"
+            android:layout_toRightOf="@+id/indicator_gender"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:background="#CECECE">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/feedView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+

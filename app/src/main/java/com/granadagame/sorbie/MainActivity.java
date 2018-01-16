@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String name, email, photo, gender, birthday, location, username;
+    public static String name, email, photo, gender, birthday, location, username, job;
     FragmentTransaction transaction;
     Window window;
     Toolbar toolbar;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         birthday = prefs.getString("Birthday", "-");
         location = prefs.getString("Location", "-");
         username = prefs.getString("UserName", "-");
+        job = prefs.getString("Job", "-");
 
         navigation = findViewById(R.id.bottom_navigation);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

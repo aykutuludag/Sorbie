@@ -5,7 +5,7 @@
     <item
         android:id="@+id/navigation_addQuestion"
         android:icon="@drawable/add"
-        android:title="@string/logout"
+        android:title="@string/add_question"
         app:showAsAction="always" />
 
 </menu>

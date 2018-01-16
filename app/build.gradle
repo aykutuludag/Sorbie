@@ -6,7 +6,7 @@ android {
         applicationId "com.granadagame.sorbie"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 8
+        versionCode 9
         versionName "1.0"
     }
     buildTypes {
@@ -27,6 +27,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:11.8.0'
     compile 'com.google.firebase:firebase-messaging:11.8.0'
     compile 'com.google.android.gms:play-services-auth:11.8.0'
+    compile 'com.google.android.gms:play-services-places:11.8.0'
     compile 'com.google.android.gms:play-services-plus:11.8.0'
     compile 'com.github.aakira:expandable-layout:1.6.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'

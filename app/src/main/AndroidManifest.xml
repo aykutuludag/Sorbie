@@ -34,22 +34,36 @@
         </activity>
         <activity
             android:name=".CommentsActivity"
-            android:label="@string/title_activity_single_question"
             android:parentActivityName=".MainActivity"
             android:theme="@style/MainTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.granadagame.sorbie.MainActivity" />
         </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/MainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.granadagame.sorbie.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileEditActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/MainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.granadagame.sorbie.ProfileEditActivity" />
+        </activity>
 
-
-        <!--ImageCrop-->
+        <!-- ImageCrop -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--Facebook-->
+        <!-- Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -71,8 +85,7 @@
             </intent-filter>
         </activity>
 
-
-        <!--Firebase-->
+        <!-- Firebase -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -94,6 +107,11 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
+        <!-- GoogleLocationServices -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAQgyMPkgtO-o6ZvT00taLJBhZLJdZ2zqk" />
     </application>
 
 </manifest>

@@ -12,12 +12,7 @@
     <string name="error_login_no_account">Hesap bulunamadı.</string>
     <string name="error_login_fail">Giriş yaparken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="error_login_cancel">Giriş işlemi kullanıcı tarafından iptal edildi</string>
-    <string name="logout">Log out</string>
     <string name="add_question">Yeni soru ekle!</string>
+    <string name="saveprofile">Log out</string>
     <string name="exit">Uygulamadan çıkmak için tekrar dokunun.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_single_feed">SingleFeed</string>
-    <string name="title_activity_single_question">SingleQuestion</string>
 </resources>

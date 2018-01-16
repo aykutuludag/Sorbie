@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.granadagame.sorbie.CommentsActivity;
+import com.granadagame.sorbie.ProfileActivity;
 import com.granadagame.sorbie.R;
 import com.granadagame.sorbie.model.FeedItem;
 import com.squareup.picasso.Picasso;
@@ -109,6 +110,19 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         }
     };
 
+    private View.OnClickListener clickListener3 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ViewHolder holder = (ViewHolder) view.getTag();
+            int position = holder.getAdapterPosition();
+            userName = feedItemList.get(position).getUsername();
+
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("whichProfile", userName);
+            mContext.startActivity(intent);
+        }
+    };
+
     public FeedAdapter(Context context, List<FeedItem> feedItemList) {
         this.feedItemList = feedItemList;
         this.mContext = context;
@@ -116,7 +130,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private void sharePost(String text, String uri) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, text + " " + uri + "Sorbie Google Play'de: https://play.google.com/store/apps/details?id=com.granadagame.sorbie");
+        intent.putExtra(Intent.EXTRA_TEXT, "Soru: " + text + " " + uri + " " + "Sorbie Google Play'de: https://play.google.com/store/apps/details?id=com.granadagame.sorbie");
         intent.setType("text/plain");
         mContext.startActivity(Intent.createChooser(intent, "Paylaş..."));
     }
@@ -168,6 +182,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         userName = feedItem.getUsername();
         viewHolder.username.setText(userName);
 
+        Picasso.with(mContext).load(feedItem.getProfile_pic()).error(R.drawable.empty).placeholder(R.drawable.empty)
+                .into(viewHolder.profilePic);
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         try {
@@ -184,9 +201,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         question = feedItem.getQuestion();
         viewHolder.question.setText(question);
 
-        Picasso.with(mContext).load(feedItem.getProfile_pic()).error(R.drawable.empty).placeholder(R.drawable.empty)
-                .into(viewHolder.profilePic);
-
         if (feedItem.getIsAnswered() == 1) {
             viewHolder.verified.setImageResource(R.drawable.send);
         } else {
@@ -202,6 +216,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         viewHolder.bottom.setOnClickListener(clickListener2);
         viewHolder.bottom.setTag(viewHolder);
+
+        viewHolder.username.setOnClickListener(clickListener3);
+        viewHolder.username.setTag(viewHolder);
+
+        viewHolder.profilePic.setOnClickListener(clickListener3);
+        viewHolder.profilePic.setTag(viewHolder);
     }
 
     @Override
