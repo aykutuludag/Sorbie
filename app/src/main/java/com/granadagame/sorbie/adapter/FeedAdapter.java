@@ -23,7 +23,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.granadagame.sorbie.CommentsActivity;
-import com.granadagame.sorbie.MainActivity;
 import com.granadagame.sorbie.R;
 import com.granadagame.sorbie.model.FeedItem;
 import com.squareup.picasso.Picasso;
@@ -34,6 +33,8 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import static com.granadagame.sorbie.MainActivity.username;
 
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
@@ -54,6 +55,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             questionID = feedItemList.get(position).getID();
             questionImage = feedItemList.get(position).getImageURI();
             question = feedItemList.get(position).getQuestion();
+            userName = feedItemList.get(position).getUsername();
 
             //Creating the instance of PopupMenu
             PopupMenu popup;
@@ -64,8 +66,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             }
             popup.getMenuInflater().inflate(R.menu.post, popup.getMenu());
 
-            String localUser = MainActivity.username;
-            if (localUser.equals(userName)) {
+            if (username.equals(userName)) {
                 popup.getMenu().findItem(R.id.post_delete).setVisible(true);
             } else {
                 popup.getMenu().findItem(R.id.post_delete).setVisible(false);
