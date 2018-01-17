@@ -9,11 +9,11 @@
     <RelativeLayout
         android:id="@+id/header_profile"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="175dp"
         android:background="#212121">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_pic"
+            android:id="@+id/other_profile_pic"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_alignParentLeft="true"
@@ -29,23 +29,23 @@
             android:id="@+id/profile_job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/profile_pic"
-            android:layout_alignLeft="@+id/profile_pic"
-            android:layout_alignRight="@+id/profile_pic"
-            android:layout_alignStart="@+id/profile_pic"
-            android:layout_below="@+id/profile_pic"
+            android:layout_alignEnd="@+id/other_profile_pic"
+            android:layout_alignLeft="@+id/other_profile_pic"
+            android:layout_alignRight="@+id/other_profile_pic"
+            android:layout_alignStart="@+id/other_profile_pic"
+            android:layout_below="@+id/other_profile_pic"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
 
         <TextView
-            android:id="@+id/profile_name"
+            android:id="@+id/other_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/profile_pic"
+            android:layout_alignTop="@+id/other_profile_pic"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/profile_pic"
-            android:layout_toRightOf="@+id/profile_pic"
+            android:layout_toEndOf="@+id/other_profile_pic"
+            android:layout_toRightOf="@+id/other_profile_pic"
             android:maxLength="16"
             android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
@@ -53,9 +53,9 @@
             android:id="@+id/indicator_desc"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:layout_alignLeft="@+id/profile_name"
-            android:layout_alignStart="@+id/profile_name"
-            android:layout_below="@+id/profile_name"
+            android:layout_alignLeft="@+id/other_profile_name"
+            android:layout_alignStart="@+id/other_profile_name"
+            android:layout_below="@+id/other_profile_name"
             android:layout_marginTop="7dp"
             app:srcCompat="@drawable/profile_email" />
 
@@ -102,7 +102,7 @@
             app:srcCompat="@drawable/profile_birthday" />
 
         <TextView
-            android:id="@+id/profile_birthday"
+            android:id="@+id/other_profile_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/indicator_birthday"
@@ -117,7 +117,7 @@
             android:layout_height="17dp"
             android:layout_alignLeft="@+id/indicator_birthday"
             android:layout_alignStart="@+id/indicator_birthday"
-            android:layout_below="@+id/profile_birthday"
+            android:layout_below="@+id/other_profile_birthday"
             android:layout_marginTop="7dp"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/profile_sex" />
@@ -147,7 +147,7 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="175dp"
         android:background="#CECECE">
 
         <android.support.v7.widget.RecyclerView

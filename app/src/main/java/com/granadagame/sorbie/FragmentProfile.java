@@ -40,6 +40,7 @@ import java.util.Map;
 import static com.granadagame.sorbie.MainActivity.birthday;
 import static com.granadagame.sorbie.MainActivity.email;
 import static com.granadagame.sorbie.MainActivity.gender;
+import static com.granadagame.sorbie.MainActivity.job;
 import static com.granadagame.sorbie.MainActivity.location;
 import static com.granadagame.sorbie.MainActivity.username;
 
@@ -77,17 +78,17 @@ public class FragmentProfile extends Fragment {
         });
 
         //Name
-        TextView navUsername = v.findViewById(R.id.profile_name);
+        TextView navUsername = v.findViewById(R.id.other_profile_name);
         navUsername.setText(username);
         //E-mail
         TextView navEmail = v.findViewById(R.id.profile_mail);
         navEmail.setText(email);
         //ProfilePicture
-        ImageView profilePic = v.findViewById(R.id.profile_pic);
+        ImageView profilePic = v.findViewById(R.id.other_profile_pic);
         Picasso.with(getActivity()).load(MainActivity.photo).error(R.drawable.profile).placeholder(R.drawable.profile)
                 .into(profilePic);
         //Age
-        TextView birthtext = v.findViewById(R.id.profile_birthday);
+        TextView birthtext = v.findViewById(R.id.other_profile_birthday);
         birthtext.setText(birthday);
 
         //Location
@@ -97,6 +98,10 @@ public class FragmentProfile extends Fragment {
         //Gender
         TextView sex = v.findViewById(R.id.profile_gender);
         sex.setText(gender);
+
+        //Job
+        TextView work = v.findViewById(R.id.profile_job);
+        work.setText(job);
 
         swipeContainer = v.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading

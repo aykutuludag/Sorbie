@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,6 +47,15 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.granadagame.sorbie.MainActivity.birthday;
+import static com.granadagame.sorbie.MainActivity.email;
+import static com.granadagame.sorbie.MainActivity.gender;
+import static com.granadagame.sorbie.MainActivity.job;
+import static com.granadagame.sorbie.MainActivity.location;
+import static com.granadagame.sorbie.MainActivity.name;
+import static com.granadagame.sorbie.MainActivity.photo;
+import static com.granadagame.sorbie.MainActivity.username;
+
 public class ProfileEditActivity extends AppCompatActivity {
 
     String UPDATE_USER_INFO = "http://granadagame.com/Sorbie/update_user_info.php";
@@ -55,7 +66,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     RadioGroup editGender;
     RadioButton bMale, bFemale, bOther;
     SharedPreferences prefs;
-    String name, email, photo, gender, birthday, location, username, job;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +85,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         coloredBars(Color.parseColor("#626262"), Color.parseColor("#ffffff"));
 
         prefs = this.getSharedPreferences("ProfileInformation", Context.MODE_PRIVATE);
-        name = prefs.getString("Name", "-");
-        email = prefs.getString("Email", "-");
-        photo = prefs.getString("ProfilePhoto", "http://granadagame.com/Sorbie/profile.png");
-        gender = prefs.getString("Gender", "-");
-        birthday = prefs.getString("Birthday", "-");
-        location = prefs.getString("Location", "-");
-        username = prefs.getString("UserName", "-");
-        job = prefs.getString("Job", "-");
+        editor = prefs.edit();
 
         editName = findViewById(R.id.editEventName);
         editMail = findViewById(R.id.editTextDesc);
@@ -146,7 +150,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         birthday = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         editBirthday.setText(birthday);
-                        prefs.edit().putString("Birthday", birthday).apply();
                     }
                 }, calendarYear, calendarMonth, calendarDay);
 
@@ -167,9 +170,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         });
 
         //  Set gender and retrieve changes
-        if (gender.equals("Male")) {
+        if (gender.equals("Erkek")) {
             bMale.setChecked(true);
-        } else if (gender.equals("Female")) {
+        } else if (gender.equals("Kadın")) {
             bFemale.setChecked(true);
         } else {
             bOther.setChecked(true);
@@ -179,17 +182,16 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int checkedId) {
                 if (checkedId == R.id.genderMale) {
                     gender = "Erkek";
-                    prefs.edit().putString("Gender", gender).apply();
                 } else if (checkedId == R.id.genderFemale) {
                     gender = "Kadın";
-                    prefs.edit().putString("Gender", gender).apply();
                 } else {
                     gender = "Diğer";
-                    prefs.edit().putString("Gender", gender).apply();
                 }
             }
         });
 
+        //Set job and retrieve job
+        editTextJob.setText(job);
         editTextJob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -204,7 +206,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 job = editable.toString();
-                updateUserInfo();
             }
         });
     }
@@ -214,7 +215,11 @@ public class ProfileEditActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        Toast.makeText(ProfileEditActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                        Intent i = getBaseContext().getPackageManager()
+                                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
                     }
                 },
                 new Response.ErrorListener() {
@@ -231,6 +236,10 @@ public class ProfileEditActivity extends AppCompatActivity {
 
                 //Adding parameters
                 params.put("username", username);
+                params.put("gender", gender);
+                params.put("birthday", birthday);
+                params.put("location", location);
+                params.put("job", job);
 
                 //returning parameters
                 return params;
@@ -255,6 +264,29 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_save:
+                editor.putString("Gender", gender);
+                editor.putString("Location", location);
+                editor.putString("Birthday", birthday);
+                editor.putString("Job", job);
+                editor.apply();
+                updateUserInfo();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1320) {
@@ -262,7 +294,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 location = place.getName().toString();
                 editLocation.setText(location);
-                prefs.edit().putString("Location", location).apply();
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Log.i("Error", status.getStatusMessage());

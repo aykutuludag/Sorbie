@@ -248,7 +248,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             question = itemView.findViewById(R.id.question);
             username = itemView.findViewById(R.id.username);
             time = itemView.findViewById(R.id.time);
-            profilePic = itemView.findViewById(R.id.profile_pic);
+            profilePic = itemView.findViewById(R.id.other_profile_pic);
             verified = itemView.findViewById(R.id.question_answered);
             comCount = itemView.findViewById(R.id.question_comment);
         }

@@ -276,10 +276,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (person != null) {
                         //GENDER
                         if (person.getGender() == 0) {
-                            gender = "Male";
+                            gender = "Erkek";
                             prefs.edit().putString("Gender", gender).apply();
                         } else if (person.getGender() == 1) {
-                            gender = "Female";
+                            gender = "Kadın";
                             prefs.edit().putString("Gender", gender).apply();
                         } else {
                             gender = "Other";
@@ -299,9 +299,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         }
                     } else {
                         //Default values
-                        gender = "Male";
+                        gender = "Erkek";
                         birthday = "01-01-2000";
-                        location = "World";
+                        location = "-";
                         prefs.edit().putString("Gender", gender).apply();
                         prefs.edit().putString("Birthday", null).apply();
                         prefs.edit().putString("Location", null).apply();

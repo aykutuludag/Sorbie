@@ -284,7 +284,6 @@
                 android:layout_alignStart="@+id/radioGroupGender"
                 android:layout_below="@+id/radioGroupGender"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/job" />
 
@@ -308,9 +307,6 @@
                 android:layout_below="@+id/indicator_job"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="Mechanical Engineer"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 

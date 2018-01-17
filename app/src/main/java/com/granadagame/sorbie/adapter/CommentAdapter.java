@@ -264,7 +264,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentHolder = itemView.findViewById(R.id.question);
             username = itemView.findViewById(R.id.username);
             time = itemView.findViewById(R.id.time);
-            profilePic = itemView.findViewById(R.id.profile_pic);
+            profilePic = itemView.findViewById(R.id.other_profile_pic);
         }
     }
 }

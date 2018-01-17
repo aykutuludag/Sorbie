@@ -39,7 +39,7 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
 
     String FETCH_USER_INFO = "http://granadagame.com/Sorbie/fetch_user_info.php";
-    String FETCH_URL = "http://granadagame.com/Sorbie/fetch_user_questions.php";
+    String FETCH_USER_QUESTIONS = "http://granadagame.com/Sorbie/fetch_user_questions.php";
 
     Toolbar toolbar;
     Window window;
@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     List<FeedItem> feedsList;
 
     ImageView profilePic;
-    TextView displayName, navEmail, birthtext, loc, sex;
+    TextView displayName, navEmail, birthtext, loc, sex, work;
     String whichUser;
 
     @Override
@@ -72,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Analytics
         Tracker t = ((AnalyticsApplication) this.getApplicationContext()).getDefaultTracker();
-        t.setScreenName("Profil");
+        t.setScreenName("Profil: " + whichUser);
         t.enableAdvertisingIdCollection(true);
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -80,25 +80,27 @@ public class ProfileActivity extends AppCompatActivity {
         whichUser = intent.getStringExtra("whichProfile");
 
         //Name
-        displayName = findViewById(R.id.profile_name);
+        displayName = findViewById(R.id.other_profile_name);
 
         //E-mail
-        navEmail = findViewById(R.id.profile_mail);
+        navEmail = findViewById(R.id.other_profile_mail);
 
         //ProfilePicture
-        profilePic = findViewById(R.id.profile_pic);
+        profilePic = findViewById(R.id.other_profile_pic);
 
         //Age
-        birthtext = findViewById(R.id.profile_birthday);
+        birthtext = findViewById(R.id.other_profile_birthday);
 
         //Location
-        loc = findViewById(R.id.profile_loc);
+        loc = findViewById(R.id.other_profile_loc);
 
         //Gender
-        sex = findViewById(R.id.profile_gender);
+        sex = findViewById(R.id.other_profile_gender);
 
+        //Job
+        work = findViewById(R.id.other_profile_job);
 
-        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer = findViewById(R.id.swipeContainerOther);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -113,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
 
         feedsList = new ArrayList<>();
-        mRecyclerView = findViewById(R.id.feedView);
+        mRecyclerView = findViewById(R.id.other_feedView);
 
         fetchUserInfo();
         fetchUserQuestions();
@@ -132,10 +134,10 @@ public class ProfileActivity extends AppCompatActivity {
                                 navEmail.setText(obj.getString("email"));
                                 Picasso.with(ProfileActivity.this).load(obj.getString("photo").replace("\\/", "/")).error(R.drawable.profile).placeholder(R.drawable.profile)
                                         .into(profilePic);
-                                birthtext.setText(obj.getInt("birthday"));
+                                birthtext.setText(obj.getString("birthday"));
                                 loc.setText(obj.getString("location"));
-                                sex.setText(obj.getInt("gender"));
-
+                                sex.setText(obj.getString("gender"));
+                                work.setText(obj.getString("job"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -171,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void fetchUserQuestions() {
         feedsList.clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, FETCH_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, FETCH_USER_QUESTIONS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
